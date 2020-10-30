@@ -1,0 +1,6 @@
+binary/cmdlog.exe
+binary/cmdlog.obj
+binary/context.obj
+binary/pipe.obj
+binary/vc140.pdb
+cmdlog.txt
