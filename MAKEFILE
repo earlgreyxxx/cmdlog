@@ -1,0 +1,38 @@
+TARGETNAME=cmdlog
+SRCDIR=.\src
+OUTDIR=.\binary
+
+LINK32=link.exe
+CPP=cl.exe
+
+ALL : $(OUTDIR)\$(TARGETNAME).exe 
+
+CLEAN :
+	-@erase /Q $(OUTDIR)\*
+	-@rmdir $(OUTDIR)
+
+$(OUTDIR) :
+	if not exist $(OUTDIR)/$(NULL) mkdir $(OUTDIR)
+
+
+#CPPFLAGS=/nologo /W4 /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\\" /c /Zi /D_WIN32_WINNT=0x0600 /DUNICODE /D_UNICODE
+CPPFLAGS=/nologo /W4 /Fo"$(OUTDIR)\\" /Fd"$(OUTDIR)\\" /c /Zi /D_WIN32_WINNT=0x0600
+
+LINKFLAGS=/nologo /out:"$(OUTDIR)\$(TARGETNAME).exe"
+
+
+OBJS=$(OUTDIR)\cmdlog.obj $(OUTDIR)\context.obj $(OUTDIR)\pipe.obj
+
+
+$(OUTDIR)\$(TARGETNAME).exe : $(OUTDIR) $(OBJS)
+	$(LINK32) $(LINKFLAGS) $(OBJS)
+
+$(OUTDIR)\cmdlog.obj : cmdlog.cpp
+	$(CPP) $(CPPFLAGS) cmdlog.cpp
+
+$(OUTDIR)\context.obj : $(SRCDIR)\context.cpp
+	$(CPP) $(CPPFLAGS) $(SRCDIR)\context.cpp
+
+$(OUTDIR)\pipe.obj : $(SRCDIR)\pipe.cpp
+	$(CPP) $(CPPFLAGS) $(SRCDIR)\pipe.cpp
+
